@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+development:
+  <<: *default
+  database: memfit_development
+  username: memfit_development
+  password: password
+
+test:
+  <<: *default
+  database: memfit_test
+  username: memfit_test
+  password: password
+
+production:
+  <<: *default
+  username: <%= ENV["DB_USERNAME"] %>
+  password: <%= ENV["DB_PASSWORD"] %>
+  database: "memfit"

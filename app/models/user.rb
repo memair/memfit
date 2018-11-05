@@ -14,11 +14,11 @@ class User < ApplicationRecord
        email:    data['email'],
        password: Devise.friendly_token[0,20]
      )
-  end
+    end
 
-  user.memair_access_token = credentials['token']
-  user.save
-  user
+    user.memair_access_token = credentials['token']
+    user.save
+    user
   end
 
   def from_google_omniauth(omniauth_info)
@@ -49,6 +49,13 @@ class User < ApplicationRecord
      google_access_token: data['access_token'],
      google_access_token_expires_at: Time.now + data['expires_in'].to_i.seconds
     )
+  end
+
+  def revoke_google_token!
+    uri = URI('https://accounts.google.com/o/oauth2/revoke')
+    params = { :token => self.google_refresh_token }
+    uri.query = URI.encode_www_form(params)
+    response = Net::HTTP.get(uri)
   end
 
   private

@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.0'
+ruby '2.5.1'
 
 gem 'rails',        '~> 5.2.1'
 gem 'pg',           '>= 0.18', '< 2.0'
@@ -14,10 +14,15 @@ gem 'jbuilder',     '~> 2.5'
 gem 'bootsnap',     '>= 1.1.0', require: false
 
 gem 'bootstrap',           '~> 4.1'
+gem 'data-confirm-modal',  '1.6.2'
 gem 'jquery-rails',        '~> 4.3'
 gem 'jquery-ui-rails',     '~> 6.0'
 
-gem 'devise',              '~> 4.5'
+gem 'devise',                 '~> 4.5'
+gem 'omniauth-memair',        '0.0.2'
+gem 'omniauth-google-oauth2', '0.5.3'
+
+gem 'google-api-client', '~> 0.24', require: ['google/apis/fitness_v1']
 
 gem 'memair', '0.0.27'
 

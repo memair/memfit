@@ -1,1 +1,21 @@
-<h1>memfit</h1>
+<div class="center jumbotron">
+  <center>
+  <h1>Memfit</h1>
+  <h2>connecting Google Fit with Memair</h2>
+  <img src="memfit.png">
+  <% flash.each do |key, value| %>
+    <div class="<%= flash_class(key) %>">
+      <%= value %>
+    </div>
+  <% end %>
+  <% unless user_signed_in? %>
+    <%= button_to "Connect with Memair", user_memair_omniauth_authorize_path, id: "sign_in", class: "btn btn-lg btn-primary" %>
+  <% end %>
+  <% if user_signed_in? && current_user.google_access_token.nil? %>
+    <%= button_to "Connect with Google Fit", user_google_oauth2_omniauth_authorize_path, id: "sign_in", class: "btn btn-lg btn-primary" %>
+  <% end %>
+  <% if user_signed_in? %>
+    <%= button_to "Delete this app", registration_path(current_user), data: { confirm: 'This app will no longer have access to your data. Data on Memair and Google Fit will be unaffected.', title: 'Are you sure you?' }, method: :delete, class: "btn btn-lg btn-danger" %>
+  <% end %>
+  </center>
+</div>

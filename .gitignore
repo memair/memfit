@@ -25,3 +25,9 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Scratch
+scratch.*
+
+# Silly Mac
+*.DS_Store*

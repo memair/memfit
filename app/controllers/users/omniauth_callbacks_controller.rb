@@ -6,7 +6,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       flash[:notice] = 'Successfully connected with Memair, now connect Google Fit'
 
       sign_in(:user, @user)
-      redirect_to user_google_oauth2_omniauth_authorize_path
+      if @user.google_access_token.nil?
+        redirect_to user_google_oauth2_omniauth_authorize_path
+      else
+        redirect_to root_path
+      end
     else
       session['devise.memair_data'] = request.env['omniauth.auth'].except(:extra) # Removing extra as it can overflow some session stores
       redirect_to new_user_registration_url, alert: @user.errors.full_messages.join("\n")

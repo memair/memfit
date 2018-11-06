@@ -1,4 +1,4 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :memair, ENV['MEMAIR_CLIENT_ID'], ENV['MEMAIR_CLIENT_SECRET'], scope: 'biometric_write digital_activity_write location_write physical_activity_write'
-  provider :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], {scope: 'email, profile, https://www.googleapis.com/auth/fitness.activity.read', access_type: 'offline'}
+  provider :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], {scope: 'email, profile, https://www.googleapis.com/auth/fitness.activity.read, https://www.googleapis.com/auth/fitness.blood_glucose.read, https://www.googleapis.com/auth/fitness.blood_pressure.read, https://www.googleapis.com/auth/fitness.body.read, https://www.googleapis.com/auth/fitness.body_temperature.read, https://www.googleapis.com/auth/fitness.location.read, https://www.googleapis.com/auth/fitness.nutrition.read, https://www.googleapis.com/auth/fitness.oxygen_saturation.read, https://www.googleapis.com/auth/fitness.reproductive_health.read', access_type: 'offline'}
 end

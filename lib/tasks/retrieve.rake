@@ -81,11 +81,10 @@ task :retrieve => :environment do
           }
         }
       """
-      puts query
       response = memair.query(query)
       puts response.to_s
     end
-    
+
     user.retrieved_until = end_date
     user.save
   end

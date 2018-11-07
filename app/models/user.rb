@@ -3,6 +3,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:memair, :google_oauth2]
 
+  def data_stream_ids
+    self.google_data_sources['data_source'].map { |ds| ds['data_stream_id'] }
+  end
+
   def set_data_sources
     self.refresh_google_token! unless self.valid_google_token?
     fitness = Google::Apis::FitnessV1::FitnessService.new

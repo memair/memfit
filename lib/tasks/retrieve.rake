@@ -12,7 +12,7 @@ task :retrieve => :environment do
 
   if start_date < end_date
     user.refresh_google_token! unless user.valid_google_token?
-    user.set_data_sources if user.data_sources.nil?
+    user.set_data_sources if user.google_data_sources.nil?
 
     biometrics = ''
     physical_activities = ''
@@ -54,7 +54,7 @@ task :retrieve => :environment do
     unless aggregatables.empty?
 
       aggregate_request = Google::Apis::FitnessV1::AggregateRequest.new
-      aggregate_request.aggregate_by = [aggregate_by_bpm, aggregate_by_steps, aggregate_by_weight]
+      aggregate_request.aggregate_by = aggregatables
       aggregate_request.bucket_by_time = bucket_by_time
       aggregate_request.start_time_millis = start_time_millis
       aggregate_request.end_time_millis = end_time_millis

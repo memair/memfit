@@ -12,6 +12,7 @@ task :retrieve => :environment do
 
   if start_date < end_date
     user.refresh_google_token! unless user.valid_google_token?
+    user.set_data_sources if user.data_sources.nil?
 
     biometrics = ''
     physical_activities = ''

@@ -3,6 +3,16 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:memair, :google_oauth2]
 
+  def set_data_sources
+    self.refresh_google_token! unless self.valid_google_token?
+    fitness = Google::Apis::FitnessV1::FitnessService.new
+    fitness.authorization = self.google_access_token
+
+    response = fitness.list_user_data_sources('me')
+    self.google_data_sources = response.to_h
+    self.save
+  end
+
   def self.from_memair_omniauth(omniauth_info)
     data        = omniauth_info.info
     credentials = omniauth_info.credentials

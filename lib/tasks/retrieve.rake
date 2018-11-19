@@ -1,6 +1,6 @@
 desc "Retrieve users data from Google Fit and pass to Memair"
 task :retrieve => :environment do
-  user       = User.where(retrieved_until: nil)&.first || User.order(retrieved_until: :desc).order('RANDOM()').first
+  user       = User.where(retrieved_until: nil)&.first || User.order(:retrieved_until).order('RANDOM()').first
 
   start_date = user.retrieved_until || Time.now.utc.to_date - 90.day
   end_date   = [Time.now.utc.to_date - 1.day, start_date + 10.days].min

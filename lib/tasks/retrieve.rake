@@ -1,6 +1,6 @@
 desc "Retrieve users data from Google Fit and pass to Memair"
 task :retrieve => :environment do
-  user       = User.where(retrieved_until: nil)&.first || User.order(:retrieved_until).first
+  user       = User.where(retrieved_until: nil)&.first || User.order(retrieved_until: :desc).order('RANDOM()').first
 
   start_date = user.retrieved_until || Time.now.utc.to_date - 90.day
   end_date   = [Time.now.utc.to_date - 1.day, start_date + 10.days].min
@@ -51,6 +51,8 @@ task :retrieve => :environment do
       aggregatables.append(aggregate_by_weight)
     end
 
+    puts "no aggregate data" if aggregatables.empty?
+
     unless aggregatables.empty?
 
       aggregate_request = Google::Apis::FitnessV1::AggregateRequest.new
@@ -73,7 +75,7 @@ task :retrieve => :environment do
           if dataset.data_source_id.include?('com.google.step_count')
             steps = dataset.point&.first&.value&.first&.int_val
             source = dataset.point&.first&.origin_data_source_id
-            physical_activities += "{timestamp: \"#{date}\" notes: \"#{steps} steps\" type: #{steps > 100 ? 'running' : 'walking'} source: \"#{source}\"}" unless steps.nil?
+            physical_activities += "{timestamp: \"#{date}\" meta: {steps: #{steps}} type: #{steps > 100 ? 'running' : 'walking'} source: \"#{source}\"}" unless steps.nil?
           end
 
           if dataset.data_source_id.include?('com.google.weight')

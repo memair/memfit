@@ -19,7 +19,7 @@ gem 'jquery-rails',        '~> 4.3'
 gem 'jquery-ui-rails',     '~> 6.0'
 
 gem 'devise',                 '~> 4.5'
-gem 'omniauth-memair',        '0.0.2'
+gem 'omniauth-memair',        '0.0.3'
 gem 'omniauth-google-oauth2', '0.5.3'
 
 gem 'google-api-client', '~> 0.24', require: ['google/apis/fitness_v1']

@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  before_destroy :revoke_memair_token
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:memair, :google_oauth2]
@@ -83,5 +85,11 @@ class User < ApplicationRecord
       }
       url = URI("https://www.googleapis.com/oauth2/v4/token")
       Net::HTTP.post_form(url, params)
+    end
+
+    def revoke_memair_token
+      user = Memair.new(self.memair_access_token)
+      query = 'mutation {RevokeAccessToken{revoked}}'
+      user.query(query)
     end
 end

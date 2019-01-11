@@ -68,8 +68,6 @@ class User < ApplicationRecord
     )
   end
 
-
-
   private
 
     def request_token_from_google

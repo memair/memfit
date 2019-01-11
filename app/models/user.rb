@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   before_destroy :revoke_memair_token
+  before_destroy :revoke_google_token
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
@@ -67,12 +68,7 @@ class User < ApplicationRecord
     )
   end
 
-  def revoke_google_token!
-    uri = URI('https://accounts.google.com/o/oauth2/revoke')
-    params = { :token => self.google_refresh_token }
-    uri.query = URI.encode_www_form(params)
-    response = Net::HTTP.get(uri)
-  end
+
 
   private
 
@@ -88,8 +84,17 @@ class User < ApplicationRecord
     end
 
     def revoke_memair_token
+      puts "revoking Memair token"
       user = Memair.new(self.memair_access_token)
       query = 'mutation {RevokeAccessToken{revoked}}'
       user.query(query)
+    end
+
+    def revoke_google_token
+      puts "revoking Google token"
+      uri = URI('https://accounts.google.com/o/oauth2/revoke')
+      params = { :token => self.google_refresh_token }
+      uri.query = URI.encode_www_form(params)
+      response = Net::HTTP.get(uri)
     end
 end

@@ -57,7 +57,7 @@ class User < ApplicationRecord
   end
 
   def valid_google_token?
-    self.google_access_token_expires_at > (Time.now + 60.seconds)
+    self.google_access_token_expires_at && self.google_access_token_expires_at > (Time.now + 60.seconds)
   end
 
   def refresh_google_token!

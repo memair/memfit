@@ -91,7 +91,7 @@ task :retrieve => :environment do
 
         query = """
           mutation {
-            BulkCreate(
+            Create(
               biometrics: [#{biometrics}]
               physical_activities: [#{physical_activities}]
             ) {

@@ -3,7 +3,7 @@ task :retrieve => :environment do
   user = User.where(retrieved_until: nil).where.not(google_access_token: nil)&.first || User.where.not(google_access_token: nil).order(:retrieved_until).order('RANDOM()').first
 
   start_date = user.retrieved_until || Time.now.utc.to_date - 90.day
-  end_date   = [Time.now.utc.to_date - 1.day, start_date + 5.days].min
+  end_date   = [Time.now.utc.to_date - 1.day, start_date + 3.days].min
 
   puts "user: #{user.email}"
   puts "retrieved_until: #{user.retrieved_until || 'NEVER RUN'}"

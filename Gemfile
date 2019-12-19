@@ -18,7 +18,7 @@ gem 'data-confirm-modal',  '1.6.2'
 gem 'jquery-rails',        '~> 4.3'
 gem 'jquery-ui-rails',     '~> 6.0'
 
-gem 'devise',                 '~> 4.5'
+gem 'devise',                 '~> 4.7'
 gem 'omniauth-memair',        '0.0.5'
 gem 'omniauth-google-oauth2', '0.5.3'
 
